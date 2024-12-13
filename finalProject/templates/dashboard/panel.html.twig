@@ -1,0 +1,144 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Admin!{% endblock %}
+
+{% block body %}
+
+
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="UTF-8"/>
+        <title>Admin | Dashboard</title>
+        <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+        <link rel="stylesheet" href="{{ asset('maquette/css/bootstrap.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('maquette/css/fonts/css/font-awesome.css') }}"/>
+        <link rel="stylesheet" href="{{ asset('maquette/css/main.css') }}"/>
+    </head>
+    <body class="padTop53 ">
+        <div id="wrap">
+            <div id="top">
+                <nav class="navbar navbar-inverse navbar-fixed-top " style="padding-top: 10px;">
+                    <a data-original-title="Show/Hide Menu" data-placement="bottom" data-tooltip="tooltip" class="accordion-toggle btn btn-primary btn-sm visible-xs" data-toggle="collapse" href="#menu" id="menu-toggle">
+                        <i class="icon-align-justify"></i>
+                    </a>
+                    <header class="navbar-header">
+                        <a href="index.html" class="navbar-brand"> </a>
+                       
+                    </header>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                <i class="icon-user "></i>&nbsp; <i class="icon-chevron-down "></i>
+                            </a>
+                            <ul class="dropdown-menu dropdown-user">
+                            <li>
+                
+                            
+                                <li>
+                                    <a href="#">
+                                        <i class="icon-user"></i> Profile
+                                    </a>
+                                </li>
+                                <li class="divider"></li>
+                                <li>
+                                    <a href="login.html">
+                                        <i class="icon-signout"></i> Logout
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+            <div id="left">
+                <div class="media user-media well-small">
+                    <a class="user-link" href="#">
+                         <img src="{{ asset('/images/Admin.png') }}" alt=""  style="width: 80px; height: 80px;"> </a>
+                    </a>
+                    <br/>
+                    <div class="media-body">
+                        <h5 class="media-heading"> BOURAOUI Saoussen</h5>
+                        <ul class="list-unstyled user-info">
+                            <li>
+                                <a class="btn btn-success btn-xs btn-circle" style="width: 10px;height: 12px;"></a> en ligne
+                            
+                            </li>
+                        </ul>
+                    </div>
+                    <br/>
+                </div>
+                <ul id="menu" class="collapse">
+                    <li class="panel">
+                        <a href="#">
+                            <i class="icon-edit"></i> Blogs
+                        </a>                   
+                    </li>
+                </ul>
+            </div>
+            <div id="content">
+                <div class="inner" style="min-height:1200px;">
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <h2>Blogs</h2>
+                        </div>
+                    </div>
+                    <hr/>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="panel panel-default">
+                                <div class="panel-heading">
+                                    Liste des blogs
+                                </div>
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                            <thead>
+                                                <tr>
+                                                    <th> Number </th>
+                                                    <th> Title </th>
+                                                    <th> Author </th>
+                                                    <th>CreatedAt</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                           {% for post in posts %}
+                                    <tr>
+                                        <td>{{ post.id }}</td>
+                                        <td>{{ post.title }}</td>
+                                        <td>{{ post.author ? post.author.username : 'Aucun auteur' }}</td>
+                                        <td>{{ post.createdAt ? post.createdAt|date('Y-m-d H:i') : 'Non défini' }}</td>
+                                        <td>
+                                             <a href="{{ path('app_post_edit', {'id': post.id}) }}" class="btn btn-primary">Modifier</a>
+                                            <form action="{{ path('app_post_delete', {'id': post.id}) }}" method="POST" style="display: inline;">
+                                                    <button type="submit" class="btn btn-danger" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce post ?')">Supprimer</button>
+                                                </form>
+                                        </td>
+                                    </tr>
+                                {% else %}
+                                    <tr>
+                                        <td colspan="5" class="text-center">Aucun post disponible</td>
+                                    </tr>
+                                {% endfor %}
+                                            </tbody>
+                                            
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="footer">
+            <p>
+                &copy; <a href="">BOURAOUI Saoussen</a> &nbsp;2024 &nbsp;
+            </p>
+        </div>
+        <script src="{{ asset('maquette/js/jquery-2.0.3.min.js') }}" ></script>
+        <script src="{{ asset('maqutte/js/bootstrap.min.js') }}" ></script>
+    </body>
+</html>
+{% endblock %}
